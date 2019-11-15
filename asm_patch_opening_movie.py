@@ -60,5 +60,19 @@ with open(argv[1], 'rb+') as rom, open(argv[2], 'rb') as movie:
     p += 0x1c
     rom.seek(p)
     update_pointer_here(rom, rom_size)
-
+    # pointer 4
+    # offset = scan_here(rom, '\x02\x00\x06\x00\x0A\x00\x0E\x00\x12\x00\x16\x00\x1A\x00\x1E\x00\xFE\xFF\xFA\xFF\xF6\xFF\xF2\xFF\xEE\xFF\xEA\xFF\xE6\xFF\xE2\xFF', 'b', 0x100)
+    p = rom.tell()
+    offset = scan_here(rom, b'\x02\x00\x06\x00', 'b', 0x100)
+    if offset is False:
+        print('Error: cannot find the 3rd offset.')
+        exit(4)
+    p += offset
+    # print('3rd offset: {:x}'.format(p))
+    update_all_pointers(rom, p + addr_rom_base - rom_size, rom_size)
+    # pointer 5
+    rom.seek(p - 8)
+    if is_pointer_here(rom):
+        update_pointer_here(rom, rom_size)
+    # todo: more cases
     
