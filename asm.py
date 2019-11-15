@@ -96,6 +96,18 @@ def update_pointer_here(rom, offset):
     print('{0:x}: {1:x} -> {2:x}'.format(rom.tell() - 4, pointer, pointer + offset))
 
 
+def is_pointer_here(rom):
+    '''
+    check if it is a pointer here (just guess)
+    '''
+    if rom.tell() % 4 == 0:
+        pointer = unpack('<I', rom.read(4))[0]
+        rom.seek(-4, 1)
+        if pointer % 4 == 0 and pointer > addr_rom_base and pointer < addr_rom_base + 0x2000000:
+            return True
+    return False
+
+
 def update_all_pointers(rom, pointer, offset, offset_range=0):
     '''
     update all occurences of specific pointer
