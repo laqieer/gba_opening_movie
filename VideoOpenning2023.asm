@@ -1,18 +1,18 @@
 .gba
-.open "rom1.gba","VideoOpening.gba",0x8000000
+.open "C:\\Users\\laqie\\Downloads\\Fire Emblem - The Sacred Stones (USA, Australia).gba","Fire Emblem - The Sacred Stones (USA, Australia) with AstataTitleMovie.gba",0x8000000
 
 ;by AetherDust
 ;from https://www.bilibili.com/video/BV1ZM411f7TB/
 ;该asm用于和Meteocn(1.5.0汉化)配套使用，具体效果是为游戏ROM增加视频片头
 
-.definelabel HijackPos,0x8800000;可以是88~8F
+.definelabel HijackPos,0x8FF0000;可以是88~8F
 
 .org 0x8000000
 .arm
 b Video
 .org HijackPos
 Video:
-.import "video.gba";视频rom
+.import "AstataTitleMovie.gba";视频rom
 CR:
 ldr r0,=CartRom
 bx r0;执行后切换为thumb模式
