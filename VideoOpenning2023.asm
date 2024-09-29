@@ -5,7 +5,7 @@
 ;from https://www.bilibili.com/video/BV1ZM411f7TB/
 ;该asm用于和Meteocn(1.5.0汉化)配套使用，具体效果是为游戏ROM增加视频片头
 
-.definelabel HijackPos,0x8FF0000;可以是88~8F
+.definelabel HijackPos,0x9110000;必须是xxx0000
 
 .org 0x8000000
 .arm
@@ -60,13 +60,13 @@ b Back;设置返回程序
 .db 9Ch,07h,00h,0EAh;即b 3001310h
 ;以下为指针校正
 .org HijackPos + 0x306
-.db (HijackPos - 0x8000000) / 0x10000
+.dh HijackPos >> 16
 .org HijackPos + 0x146
-.db (HijackPos - 0x8000000) / 0x10000
+.dh HijackPos >> 16
 .org HijackPos + 0x222
-.db (HijackPos - 0x8000000) / 0x10000
+.dh HijackPos >> 16
 .org HijackPos + 0x166
-.db (HijackPos - 0x8000000) / 0x10000
+.dh HijackPos >> 16
 .org HijackPos + 0x9CF6
-.db (HijackPos - 0x8000000) / 0x10000
+.dh HijackPos >> 16
 .close
