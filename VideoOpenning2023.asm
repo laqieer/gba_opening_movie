@@ -34,6 +34,9 @@ mov r0,r0;对齐
 bx r15;切换为arm模式
 .arm
 Normal:
+mov r0,0
+ldr r1, =0x4000208
+str r0, [r1]
 mov r0,12h
 b 80000C0h;返回正常游戏
 Back:
